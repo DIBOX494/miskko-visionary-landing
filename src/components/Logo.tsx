@@ -1,5 +1,5 @@
 
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { cn } from '@/lib/utils';
 
 interface LogoProps {
@@ -8,6 +8,38 @@ interface LogoProps {
 
 const Logo: React.FC<LogoProps> = ({ className }) => {
   const logoRef = useRef<HTMLDivElement>(null);
+  const [isHovered, setIsHovered] = useState(false);
+  const [rotation, setRotation] = useState({ x: 0, y: 0 });
+  
+  useEffect(() => {
+    let animationFrameId: number;
+    let lastTimestamp: number;
+    
+    const animate = (timestamp: number) => {
+      if (!lastTimestamp) lastTimestamp = timestamp;
+      const delta = timestamp - lastTimestamp;
+      lastTimestamp = timestamp;
+      
+      setRotation(prev => {
+        // Determine rotation speed based on hover state
+        const speed = isHovered ? 0.02 : 0.01;
+        
+        // Calculate new rotation angles
+        return {
+          x: prev.x + speed * Math.sin(timestamp / 3000) * (delta / 16),
+          y: prev.y + speed * (delta / 16)
+        };
+      });
+      
+      animationFrameId = requestAnimationFrame(animate);
+    };
+    
+    animationFrameId = requestAnimationFrame(animate);
+    
+    return () => {
+      cancelAnimationFrame(animationFrameId);
+    };
+  }, [isHovered]);
   
   useEffect(() => {
     const handleMouseMove = (e: MouseEvent) => {
@@ -17,12 +49,13 @@ const Logo: React.FC<LogoProps> = ({ className }) => {
       const x = (e.clientX - rect.left - rect.width / 2) / 20;
       const y = (e.clientY - rect.top - rect.height / 2) / 20;
       
-      logoRef.current.style.transform = `perspective(1000px) rotateX(${-y}deg) rotateY(${x}deg)`;
+      // Add slight tilt towards the cursor
+      logoRef.current.style.transform = `perspective(1000px) rotateX(${-y + rotation.x}deg) rotateY(${x + rotation.y}deg)`;
     };
     
     const handleMouseLeave = () => {
       if (!logoRef.current) return;
-      logoRef.current.style.transform = 'perspective(1000px) rotateX(0) rotateY(0)';
+      logoRef.current.style.transform = `perspective(1000px) rotateX(${rotation.x}deg) rotateY(${rotation.y}deg)`;
     };
     
     const logoElement = logoRef.current;
@@ -37,7 +70,7 @@ const Logo: React.FC<LogoProps> = ({ className }) => {
         logoElement.removeEventListener('mouseleave', handleMouseLeave);
       }
     };
-  }, []);
+  }, [rotation]);
   
   return (
     <div 
@@ -46,12 +79,25 @@ const Logo: React.FC<LogoProps> = ({ className }) => {
         "relative transition-transform duration-200 ease-out cursor-pointer select-none",
         className
       )}
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
+      style={{ 
+        transform: `perspective(1000px) rotateX(${rotation.x}deg) rotateY(${rotation.y}deg)` 
+      }}
     >
       <div className="relative inline-block">
-        <div className="text-7xl font-display font-bold metal-text tracking-tighter">
+        <div className="text-7xl font-display font-bold tracking-tighter">
+          <span className="bg-gradient-to-b from-metal-light via-white to-metal-dark bg-clip-text text-transparent filter drop-shadow-lg">
+            MISKKO
+          </span>
+        </div>
+        
+        <div className="absolute -inset-px text-7xl font-display font-bold tracking-tighter text-transparent bg-clip-text bg-gradient-to-r from-white/5 via-white/20 to-white/5 blur-[2px] animate-shimmer bg-[length:200%_auto]">
           MISKKO
         </div>
-        <div className="absolute -inset-px text-7xl font-display font-bold tracking-tighter text-transparent bg-clip-text bg-gradient-to-b from-white/5 to-white/0 blur-sm">
+        
+        {/* Glow effect */}
+        <div className="absolute inset-0 text-7xl font-display font-bold tracking-tighter text-transparent filter blur-md opacity-50 text-neon">
           MISKKO
         </div>
       </div>

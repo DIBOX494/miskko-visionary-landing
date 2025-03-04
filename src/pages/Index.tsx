@@ -1,3 +1,4 @@
+
 import React, { useEffect, useState } from 'react';
 import Logo from '@/components/Logo';
 import NeonButton from '@/components/NeonButton';
@@ -55,7 +56,7 @@ const Index = () => {
           
           <div className={`text-center max-w-md mx-auto space-y-6 transition-all duration-700 delay-100 ${mounted ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
             <div className="inline-block px-3 py-1 bg-dark-200 rounded-full mb-4">
-              <span className="text-xs uppercase tracking-wider text-white/60">Coming Soon</span>
+              <span className="text-xs uppercase tracking-wider text-white/60">Your next favorite drop is loading</span>
             </div>
             
             <h1 className="text-3xl md:text-4xl font-display font-bold tracking-tight text-glow">

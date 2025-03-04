@@ -10,6 +10,7 @@ interface WaitlistFormProps {
 
 const WaitlistForm: React.FC<WaitlistFormProps> = ({ className }) => {
   const [email, setEmail] = useState('');
+  const [phone, setPhone] = useState('');
   const [loading, setLoading] = useState(false);
   
   const handleSubmit = (e: React.FormEvent) => {
@@ -26,6 +27,7 @@ const WaitlistForm: React.FC<WaitlistFormProps> = ({ className }) => {
     setTimeout(() => {
       setLoading(false);
       setEmail('');
+      setPhone('');
       toast.success('Thank you for joining the waitlist!');
     }, 1500);
   };
@@ -39,6 +41,19 @@ const WaitlistForm: React.FC<WaitlistFormProps> = ({ className }) => {
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             placeholder="Enter your email"
+            className="w-full px-4 py-3 bg-dark-100 border border-white/10 rounded-md focus:border-neon/50 focus:ring-1 focus:ring-neon/30 focus:outline-none text-white"
+            disabled={loading}
+            required
+          />
+          <div className="absolute inset-0 border border-white/5 rounded-md pointer-events-none" />
+        </div>
+        
+        <div className="relative">
+          <input
+            type="tel"
+            value={phone}
+            onChange={(e) => setPhone(e.target.value)}
+            placeholder="Enter your phone number (optional)"
             className="w-full px-4 py-3 bg-dark-100 border border-white/10 rounded-md focus:border-neon/50 focus:ring-1 focus:ring-neon/30 focus:outline-none text-white"
             disabled={loading}
           />
