@@ -22,13 +22,13 @@ const Logo: React.FC<LogoProps> = ({ className }) => {
       
       setRotation(prev => {
         // Determine rotation speed based on hover state
-        const speed = isHovered ? 0.05 : 0.03;
+        const speed = isHovered ? 0.08 : 0.05;
         
         // Calculate new rotation angles with more dynamic movement
         return {
-          x: prev.x + speed * Math.sin(timestamp / 2500) * (delta / 16),
-          y: prev.y + speed * (delta / 16),
-          z: prev.z + speed * Math.cos(timestamp / 3500) * 0.2 * (delta / 16)
+          x: prev.x + speed * Math.sin(timestamp / 1800) * (delta / 16),
+          y: prev.y + speed * Math.cos(timestamp / 2200) * (delta / 16),
+          z: prev.z + speed * Math.sin(timestamp / 2500) * 0.3 * (delta / 16)
         };
       });
       
@@ -47,16 +47,16 @@ const Logo: React.FC<LogoProps> = ({ className }) => {
       if (!logoRef.current) return;
       
       const rect = logoRef.current.getBoundingClientRect();
-      const x = (e.clientX - rect.left - rect.width / 2) / 15; // Increased sensitivity
-      const y = (e.clientY - rect.top - rect.height / 2) / 15; // Increased sensitivity
+      const x = (e.clientX - rect.left - rect.width / 2) / 10; // Further increased sensitivity
+      const y = (e.clientY - rect.top - rect.height / 2) / 10; // Further increased sensitivity
       
-      // Add more pronounced tilt towards the cursor
-      logoRef.current.style.transform = `perspective(800px) rotateX(${-y + rotation.x}deg) rotateY(${x + rotation.y}deg) rotateZ(${rotation.z}deg) scale3d(1.05, 1.05, 1.05)`;
+      // Add even more pronounced tilt towards the cursor
+      logoRef.current.style.transform = `perspective(600px) rotateX(${-y + rotation.x}deg) rotateY(${x + rotation.y}deg) rotateZ(${rotation.z}deg) scale3d(1.1, 1.1, 1.1)`;
     };
     
     const handleMouseLeave = () => {
       if (!logoRef.current) return;
-      logoRef.current.style.transform = `perspective(800px) rotateX(${rotation.x}deg) rotateY(${rotation.y}deg) rotateZ(${rotation.z}deg)`;
+      logoRef.current.style.transform = `perspective(600px) rotateX(${rotation.x}deg) rotateY(${rotation.y}deg) rotateZ(${rotation.z}deg)`;
     };
     
     const logoElement = logoRef.current;
@@ -83,7 +83,7 @@ const Logo: React.FC<LogoProps> = ({ className }) => {
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
       style={{ 
-        transform: `perspective(800px) rotateX(${rotation.x}deg) rotateY(${rotation.y}deg) rotateZ(${rotation.z}deg)` 
+        transform: `perspective(600px) rotateX(${rotation.x}deg) rotateY(${rotation.y}deg) rotateZ(${rotation.z}deg)` 
       }}
     >
       <div className="relative inline-block">
