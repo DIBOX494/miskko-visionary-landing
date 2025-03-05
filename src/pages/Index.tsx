@@ -37,13 +37,26 @@ const Index = () => {
         </div>
         
         <div className="flex gap-4">
-          <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" 
+          <a href="https://www.instagram.com/miskk_oo" target="_blank" rel="noopener noreferrer" 
              className="text-white/60 hover:text-white">
             <Instagram size={20} />
           </a>
-          <a href="https://twitter.com" target="_blank" rel="noopener noreferrer" 
+          <a href="https://www.tiktok.com/@miskko.hz" target="_blank" rel="noopener noreferrer" 
              className="text-white/60 hover:text-white">
-            <Twitter size={20} />
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="20"
+              height="20"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              className="lucide"
+            >
+              <path d="M9 12a4 4 0 1 0 4 4V4a5 5 0 0 0 5 5" />
+            </svg>
           </a>
         </div>
       </header>
