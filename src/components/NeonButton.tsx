@@ -15,8 +15,9 @@ const NeonButton: React.FC<NeonButtonProps> = ({
   return (
     <button
       className={cn(
-        "relative px-6 py-3 rounded-md text-black font-medium",
-        "bg-[#39ff14] hover:bg-[#32cc12] shadow-neon",
+        "bg-[#39ff14] hover:bg-[#32cc12] text-black",
+        "px-6 py-3 md:px-8 md:py-4 rounded-md",
+        "font-bold text-base md:text-lg",
         "transition-all duration-300 ease-out",
         "transform hover:scale-105 active:scale-95",
         className
